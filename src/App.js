@@ -6,6 +6,106 @@ import { Button } from 'react-bootstrap';
 import PieChart from './PieChart';
 import D3Chart from './D3Chart';
 
+const newsList = [
+  {
+    title: 'Apple announces new iPhone model',
+    time: '2024-06-25T10:30:00',
+    details: 'Apple Inc. has unveiled its latest iPhone model, featuring breakthrough AI capabilities and extended battery life.',
+    stocks: [
+      {
+        name: 'AAPL',
+        sentiment: 8,
+        portfolioImpact: 0.02,
+        prices: {
+          historical: [
+            { date: '2024-06-25T09:30:00', price: 185.21 },
+            { date: '2024-06-25T09:45:00', price: 185.68 },
+            { date: '2024-06-25T10:00:00', price: 186.03 },
+            { date: '2024-06-25T10:15:00', price: 185.89 },
+            { date: '2024-06-25T10:30:00', price: 186.75 },
+          ],
+          predictions: [
+            { date: '2024-06-25T11:30:00', price: 188.20 },
+            { date: '2024-06-26T10:30:00', price: 190.50 },
+            { date: '2024-06-28T10:30:00', price: 192.75 },
+          ]
+        }
+      },
+      {
+        name: 'GOOGL',
+        sentiment: 6,
+        portfolioImpact: 0.03,
+        prices: {
+          historical: [
+            { date: '2024-06-19T09:30:00', price: 123.45 },
+            { date: '2024-06-19T10:30:00', price: 123.45 },
+            { date: '2024-06-19T11:30:00', price: 123.45 },
+            { date: '2024-06-19T12:30:00', price: 123.45 },
+            { date: '2024-06-19T13:30:00', price: 123.45 },
+            { date: '2024-06-19T14:30:00', price: 123.45 },
+            { date: '2024-06-19T15:30:00', price: 123.45 },
+            { date: '2024-06-20T09:45:00', price: 123.78 },
+            { date: '2024-06-21T10:00:00', price: 124.01 },
+            { date: '2024-06-22T10:15:00', price: 123.89 },
+            { date: '2024-06-23T10:30:00', price: 123.56 },
+          ],
+          predictions: [
+            { date: '2024-06-25T11:30:00', price: 123.20 },
+            { date: '2024-06-26T10:30:00', price: 122.80 },
+            { date: '2024-06-28T10:30:00', price: 122.50 },
+          ]
+        }
+      },
+    ],
+  },
+  {
+    title: 'Microsoft releases new AI tool for developers',
+    time: '2024-06-25T11:45:00',
+    details: 'Microsoft has launched a powerful new AI development toolkit, aiming to simplify machine learning integration for developers.',
+    stocks: [
+      {
+        name: 'MSFT',
+        sentiment: 9,
+        portfolioImpact: 0.04,
+        prices: {
+          historical: [
+            { date: '2024-06-25T10:45:00', price: 335.67 },
+            { date: '2024-06-25T11:00:00', price: 336.12 },
+            { date: '2024-06-25T11:15:00', price: 336.45 },
+            { date: '2024-06-25T11:30:00', price: 336.78 },
+            { date: '2024-06-25T11:45:00', price: 338.20 },
+          ],
+          predictions: [
+            { date: '2024-06-25T12:45:00', price: 340.50 },
+            { date: '2024-06-26T11:45:00', price: 342.75 },
+            { date: '2024-06-28T11:45:00', price: 345.00 },
+          ]
+        }
+      },
+      {
+        name: 'AMZN',
+        sentiment: 5,
+        portfolioImpact: 0.05,
+        prices: {
+          historical: [
+            { date: '2024-06-25T10:45:00', price: 130.56 },
+            { date: '2024-06-25T11:00:00', price: 130.78 },
+            { date: '2024-06-25T11:15:00', price: 130.92 },
+            { date: '2024-06-25T11:30:00', price: 130.85 },
+            { date: '2024-06-25T11:45:00', price: 130.70 },
+          ],
+          predictions: [
+            { date: '2024-06-25T12:45:00', price: 130.50 },
+            { date: '2024-06-26T11:45:00', price: 130.25 },
+            { date: '2024-06-28T11:45:00', price: 129.90 },
+          ]
+        }
+      },
+    ],
+  },
+];
+
+
 const GlobalStyle = createGlobalStyle`
   body {
     background-color: #f0f2f5;
@@ -200,113 +300,18 @@ const App = () => {
 
   const fundStocks = {
     'Fund A': [
-      { name: 'AAPL', weight: 0.15, activeWeight: 0.05, portfolioImpact: 0.02 },
-      { name: 'GOOGL', weight: 0.25, activeWeight: -0.02, portfolioImpact: 0.03 },
+      { name: 'AAPL', weight: 0.15, activeWeight: 0.05 },
+      { name: 'GOOGL', weight: 0.25, activeWeight: -0.02 },
     ],
     'Fund B': [
-      { name: 'MSFT', weight: 0.30, activeWeight: 0.07, portfolioImpact: 0.04 },
-      { name: 'AMZN', weight: 0.10, activeWeight: -0.01, portfolioImpact: 0.05 },
+      { name: 'MSFT', weight: 0.30, activeWeight: 0.07 },
+      { name: 'AMZN', weight: 0.10, activeWeight: -0.01 },
     ],
     'Fund C': [
-      { name: 'TSLA', weight: 0.20, activeWeight: 0.03, portfolioImpact: 0.06 },
-      { name: 'NVDA', weight: 0.05, activeWeight: -0.04, portfolioImpact: 0.01 },
+      { name: 'TSLA', weight: 0.20, activeWeight: 0.03 },
+      { name: 'NVDA', weight: 0.05, activeWeight: -0.04 },
     ],
   };
-
-  const newsList = [
-    {
-      title: 'Apple announces new iPhone model',
-      time: '2024-06-25T10:30:00',
-      details: 'Apple Inc. has unveiled its latest iPhone model, featuring breakthrough AI capabilities and extended battery life.',
-      stocks: [
-        {
-          name: 'AAPL',
-          sentiment: 8,
-          prices: {
-            historical: [
-              { date: '2024-06-25T09:30:00', price: 185.21 },
-              { date: '2024-06-25T09:45:00', price: 185.68 },
-              { date: '2024-06-25T10:00:00', price: 186.03 },
-              { date: '2024-06-25T10:15:00', price: 185.89 },
-              { date: '2024-06-25T10:30:00', price: 186.75 },
-            ],
-            predictions: [
-              { date: '2024-06-25T11:30:00', price: 188.20 },
-              { date: '2024-06-26T10:30:00', price: 190.50 },
-              { date: '2024-06-28T10:30:00', price: 192.75 },
-            ]
-          }
-        },
-        {
-          name: 'GOOGL',
-          sentiment: 6,
-          prices: {
-            historical: [
-              { date: '2024-06-19T09:30:00', price: 123.45 },
-              { date: '2024-06-19T10:30:00', price: 123.45 },
-              { date: '2024-06-19T11:30:00', price: 123.45 },
-              { date: '2024-06-19T12:30:00', price: 123.45 },
-              { date: '2024-06-19T13:30:00', price: 123.45 },
-              { date: '2024-06-19T14:30:00', price: 123.45 },
-              { date: '2024-06-19T15:30:00', price: 123.45 },
-              { date: '2024-06-20T09:45:00', price: 123.78 },
-              { date: '2024-06-21T10:00:00', price: 124.01 },
-              { date: '2024-06-22T10:15:00', price: 123.89 },
-              { date: '2024-06-23T10:30:00', price: 123.56 },
-            ],
-            predictions: [
-              { date: '2024-06-25T11:30:00', price: 123.20 },
-              { date: '2024-06-26T10:30:00', price: 122.80 },
-              { date: '2024-06-28T10:30:00', price: 122.50 },
-            ]
-          }
-        },
-      ],
-    },
-    {
-      title: 'Microsoft releases new AI tool for developers',
-      time: '2024-06-25T11:45:00',
-      details: 'Microsoft has launched a powerful new AI development toolkit, aiming to simplify machine learning integration for developers.',
-      stocks: [
-        {
-          name: 'MSFT',
-          sentiment: 9,
-          prices: {
-            historical: [
-              { date: '2024-06-25T10:45:00', price: 335.67 },
-              { date: '2024-06-25T11:00:00', price: 336.12 },
-              { date: '2024-06-25T11:15:00', price: 336.45 },
-              { date: '2024-06-25T11:30:00', price: 336.78 },
-              { date: '2024-06-25T11:45:00', price: 338.20 },
-            ],
-            predictions: [
-              { date: '2024-06-25T12:45:00', price: 340.50 },
-              { date: '2024-06-26T11:45:00', price: 342.75 },
-              { date: '2024-06-28T11:45:00', price: 345.00 },
-            ]
-          }
-        },
-        {
-          name: 'AMZN',
-          sentiment: 5,
-          prices: {
-            historical: [
-              { date: '2024-06-25T10:45:00', price: 130.56 },
-              { date: '2024-06-25T11:00:00', price: 130.78 },
-              { date: '2024-06-25T11:15:00', price: 130.92 },
-              { date: '2024-06-25T11:30:00', price: 130.85 },
-              { date: '2024-06-25T11:45:00', price: 130.70 },
-            ],
-            predictions: [
-              { date: '2024-06-25T12:45:00', price: 130.50 },
-              { date: '2024-06-26T11:45:00', price: 130.25 },
-              { date: '2024-06-28T11:45:00', price: 129.90 },
-            ]
-          }
-        },
-      ],
-    },
-  ];
 
   const toggleSortOrder = () => {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -338,8 +343,8 @@ const App = () => {
   };
 
   const getPortfolioImpact = (stockName) => {
-    if (!selectedFund) return 0;
-    const stock = fundStocks[selectedFund.value].find(s => s.name === stockName);
+    if (!selectedNews) return 0;
+    const stock = selectedNews.stocks.find(s => s.name === stockName);
     return stock ? stock.portfolioImpact : 0;
   };
 
