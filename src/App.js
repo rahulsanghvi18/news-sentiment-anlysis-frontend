@@ -188,38 +188,111 @@ const App = () => {
     { value: 'Fund A', label: 'Fund A' },
     { value: 'Fund B', label: 'Fund B' },
     { value: 'Fund C', label: 'Fund C' },
-    { value: 'Fund D', label: 'Fund D' },
-    { value: 'Fund E', label: 'Fund E' },
   ];
 
   const fundStocks = {
     'Fund A': ['AAPL', 'GOOGL'],
     'Fund B': ['MSFT', 'AMZN'],
-    'Fund C': ['JNJ', 'PFE'],
-    'Fund D': ['XOM', 'CVX'],
-    'Fund E': ['JPM', 'BAC'],
+    'Fund C': ['TSLA', 'NVDA'],
   };
 
   const newsList = [
     {
-      title: 'Market rallies on economic data',
-      time: '10:00 AM, 2024-06-25',
-      details: 'Full news content here...',
+      title: 'Apple announces new iPhone model',
+      time: '2024-06-25T10:30:00',
+      details: 'Apple Inc. has unveiled its latest iPhone model, featuring breakthrough AI capabilities and extended battery life.',
       stocks: [
-        { name: 'AAPL', sentiment: 7, weight: 0.05, prices: { current: 150, nextHour: 151, nextDay: 155, nextWeek: 160 } },
-        { name: 'GOOGL', sentiment: 8, weight: -0.06, prices: { current: 2500, nextHour: 2502, nextDay: 2510, nextWeek: 2520 } },
+        {
+          name: 'AAPL',
+          sentiment: 8,
+          weight: 0.05,
+          prices: {
+            historical: [
+              { date: '2024-06-25T09:30:00', price: 185.21 },
+              { date: '2024-06-25T09:45:00', price: 185.68 },
+              { date: '2024-06-25T10:00:00', price: 186.03 },
+              { date: '2024-06-25T10:15:00', price: 185.89 },
+              { date: '2024-06-25T10:30:00', price: 186.75 },
+            ],
+            predictions: [
+              { date: '2024-06-25T11:30:00', price: 188.20 },
+              { date: '2024-06-26T10:30:00', price: 190.50 },
+              { date: '2024-06-28T10:30:00', price: 192.75 },
+            ]
+          }
+        },
+        {
+          name: 'GOOGL',
+          sentiment: 6,
+          weight: -0.02,
+          prices: {
+            historical: [
+              { date: '2024-06-19T09:30:00', price: 123.45 },
+              { date: '2024-06-19T10:30:00', price: 123.45 },
+              { date: '2024-06-19T11:30:00', price: 123.45 },
+              { date: '2024-06-19T12:30:00', price: 123.45 },
+              { date: '2024-06-19T13:30:00', price: 123.45 },
+              { date: '2024-06-19T14:30:00', price: 123.45 },
+              { date: '2024-06-19T15:30:00', price: 123.45 },
+              { date: '2024-06-20T09:45:00', price: 123.78 },
+              { date: '2024-06-21T10:00:00', price: 124.01 },
+              { date: '2024-06-22T10:15:00', price: 123.89 },
+              { date: '2024-06-23T10:30:00', price: 123.56 },
+            ],
+            predictions: [
+              { date: '2024-06-25T11:30:00', price: 123.20 },
+              { date: '2024-06-26T10:30:00', price: 122.80 },
+              { date: '2024-06-28T10:30:00', price: 122.50 },
+            ]
+          }
+        },
       ],
     },
     {
-      title: 'Tech stocks soar',
-      time: '11:00 AM, 2024-06-25',
-      details: 'Full news content here...',
+      title: 'Microsoft releases new AI tool for developers',
+      time: '2024-06-25T11:45:00',
+      details: 'Microsoft has launched a powerful new AI development toolkit, aiming to simplify machine learning integration for developers.',
       stocks: [
-        { name: 'MSFT', sentiment: 9, weight: 0.07, prices: { current: 300, nextHour: 301, nextDay: 305, nextWeek: 310 } },
-        { name: 'AMZN', sentiment: 6, weight: 0.08, prices: { current: 3400, nextHour: 3405, nextDay: 3420, nextWeek: 3450 } },
+        {
+          name: 'MSFT',
+          sentiment: 9,
+          weight: 0.07,
+          prices: {
+            historical: [
+              { date: '2024-06-25T10:45:00', price: 335.67 },
+              { date: '2024-06-25T11:00:00', price: 336.12 },
+              { date: '2024-06-25T11:15:00', price: 336.45 },
+              { date: '2024-06-25T11:30:00', price: 336.78 },
+              { date: '2024-06-25T11:45:00', price: 338.20 },
+            ],
+            predictions: [
+              { date: '2024-06-25T12:45:00', price: 340.50 },
+              { date: '2024-06-26T11:45:00', price: 342.75 },
+              { date: '2024-06-28T11:45:00', price: 345.00 },
+            ]
+          }
+        },
+        {
+          name: 'AMZN',
+          sentiment: 5,
+          weight: -0.01,
+          prices: {
+            historical: [
+              { date: '2024-06-25T10:45:00', price: 130.56 },
+              { date: '2024-06-25T11:00:00', price: 130.78 },
+              { date: '2024-06-25T11:15:00', price: 130.92 },
+              { date: '2024-06-25T11:30:00', price: 130.85 },
+              { date: '2024-06-25T11:45:00', price: 130.70 },
+            ],
+            predictions: [
+              { date: '2024-06-25T12:45:00', price: 130.50 },
+              { date: '2024-06-26T11:45:00', price: 130.25 },
+              { date: '2024-06-28T11:45:00', price: 129.90 },
+            ]
+          }
+        },
       ],
     },
-    // Add similar objects for other news items
   ];
 
   const toggleSortOrder = () => {
@@ -227,7 +300,7 @@ const App = () => {
   };
 
   const filterByDateRange = (news) => {
-    const newsDate = new Date(news.time.split(', ')[1]);
+    const newsDate = new Date(news.time);
     const fromDate = filterFromDate ? new Date(filterFromDate) : new Date('1900-01-01');
     const toDate = filterToDate ? new Date(filterToDate) : new Date();
     return newsDate >= fromDate && newsDate <= toDate;
@@ -243,20 +316,10 @@ const App = () => {
     .filter(filterByFund)
     .filter(filterByDateRange)
     .sort((a, b) => {
-      const dateA = new Date(a.time.split(', ')[1]);
-      const dateB = new Date(b.time.split(', ')[1]);
+      const dateA = new Date(a.time);
+      const dateB = new Date(b.time);
       return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
     });
-
-  const getStockPriceData = (stock) => {
-    const newsDate = new Date(selectedNews.time);
-    return [
-      { date: newsDate.toISOString(), price: stock.prices.current },
-      { date: new Date(newsDate.getTime() + 60 * 60 * 1000).toISOString(), price: stock.prices.nextHour },
-      { date: new Date(newsDate.getTime() + 24 * 60 * 60 * 1000).toISOString(), price: stock.prices.nextDay },
-      { date: new Date(newsDate.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(), price: stock.prices.nextWeek },
-    ];
-  };
 
   return (
     <>
@@ -279,25 +342,25 @@ const App = () => {
         <Content>
           <Sidebar>
             <ControlsContainer>
-              <Label><FaCalendarAlt style={{ color: 'white' }} /> From:</Label>
+              <Label><FaCalendarAlt style={{ color: '#64ffda' }} /> From:</Label>
               <DateInput 
                 type="date"
                 value={filterFromDate}
                 onChange={(e) => setFilterFromDate(e.target.value)}
               />
-              <Label><FaCalendarAlt style={{ color: 'white' }} /> To:</Label>
+              <Label><FaCalendarAlt style={{ color: '#64ffda' }} /> To:</Label>
               <DateInput 
                 type="date"
                 value={filterToDate}
                 onChange={(e) => setFilterToDate(e.target.value)}
               />
               <SortButton onClick={toggleSortOrder}>
-                <FaSort style={{ color: 'white' }} />
+                <FaSort />
               </SortButton>
             </ControlsContainer>
             {filteredNewsList.map((news, index) => (
               <NewsItem key={index} onClick={() => { setSelectedNews(news); setSelectedStock(null); }}>
-                <strong>{news.title}</strong> <br /> <small>{news.time}</small>
+                <strong>{news.title}</strong> <br /> <small>{new Date(news.time).toLocaleString()}</small>
               </NewsItem>
             ))}
           </Sidebar>
@@ -305,7 +368,7 @@ const App = () => {
             {selectedNews ? (
               <>
                 <NewsTitle>{selectedNews.title}</NewsTitle>
-                <NewsTime>{selectedNews.time}</NewsTime>
+                <NewsTime>{new Date(selectedNews.time).toLocaleString()}</NewsTime>
                 <NewsContent>{selectedNews.details}</NewsContent>
                 <NewsStocks>
                   <strong>Affected Stocks:</strong>
@@ -323,13 +386,17 @@ const App = () => {
                     ))}
                 </NewsStocks>
                 {selectedStock && (
-                  <StockDetails>
-                    <p><strong>Stock Name:</strong> {selectedStock.name}</p>
-                    <p><strong>Sentiment Score:</strong> {selectedStock.sentiment}</p>
-                    <p><strong>Portfolio Active Weight:</strong> {selectedStock.weight}</p>
-                    <D3Chart data={getStockPriceData(selectedStock)} />
-                  </StockDetails>
-                )}
+                <StockDetails>
+                  <p><strong>Stock Name:</strong> {selectedStock.name}</p>
+                  <p><strong>Sentiment Score:</strong> {selectedStock.sentiment}</p>
+                  <p><strong>Portfolio Active Weight:</strong> {selectedStock.weight}</p>
+                  <D3Chart 
+                    data={selectedStock.prices.historical}
+                    predictions={selectedStock.prices.predictions}
+                    newsTime={selectedNews.time}
+                  />
+                </StockDetails>
+              )}
               </>
             ) : (
               <p>Select a news item to see details</p>
@@ -342,3 +409,5 @@ const App = () => {
 };
 
 export default App;
+
+
