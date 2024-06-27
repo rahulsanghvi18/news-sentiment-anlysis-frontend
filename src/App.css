@@ -1,12 +1,13 @@
+/* Light theme and futuristic look */
 body {
-  background-color: #212529;
-  color: white;
+  background-color: #f0f2f5;
+  color: #333;
 }
 
 .header {
-  background-color: #343a40;
+  background-color: #ffffff;
   padding: 10px 20px;
-  border-bottom: 1px solid #495057;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .news-list {
@@ -15,33 +16,33 @@ body {
 }
 
 .news-details {
-  background-color: #343a40;
+  background-color: #ffffff;
   padding: 20px;
-  border-left: 1px solid #495057;
+  border-left: 1px solid #e0e0e0;
 }
 
 .list-group-item {
-  background-color: #495057;
-  border: 1px solid #6c757d;
-  color: white;
+  background-color: #ffffff;
+  border: 1px solid #d0d0d0;
+  color: #333;
 }
 
 .list-group-item:hover {
-  background-color: #6c757d;
+  background-color: #e0e0e0;
 }
 
 .list-group-item.active {
-  background-color: #6c757d;
-  border-color: #6c757d;
+  background-color: #e0e0e0;
+  border-color: #d0d0d0;
 }
 
 .select__control {
-  background-color: #343a40;
-  color: white;
-  border-color: #6c757d;
+  background-color: #ffffff;
+  color: #333;
+  border-color: #d0d0d0;
 }
 
 .select__menu {
-  background-color: #343a40;
-  color: white;
+  background-color: #ffffff;
+  color: #333;
 }

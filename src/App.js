@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Select from 'react-select';
 import { FaSort, FaCalendarAlt } from 'react-icons/fa';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import D3Chart from './D3Chart';
 
 const GlobalStyle = createGlobalStyle`
   body {
-    background-color: #121212;
-    color: #ffffff;
+    background-color: #f0f2f5;
+    color: #333;
     font-family: 'Roboto', sans-serif;
   }
 `;
@@ -21,10 +21,10 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #1f1f1f;
+  background-color: #ffffff;
   padding: 10px 20px;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const Title = styled.h1`
@@ -34,17 +34,17 @@ const Title = styled.h1`
 const ControlsContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: #1f1f1f;
+  background-color: #ffffff;
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 `;
 
 const DateInput = styled.input`
-  background-color: #292929;
-  color: white;
-  border-color: #6c757d;
+  background-color: #ffffff;
+  color: #333;
+  border-color: #d0d0d0;
   border-radius: 10px;
   padding: 5px;
   margin: 0 10px;
@@ -55,7 +55,7 @@ const Label = styled.span`
   align-items: center;
   font-size: 16px;
   margin-right: 10px;
-  color: white;
+  color: #333;
 `;
 
 const SortButton = styled(Button)`
@@ -63,11 +63,11 @@ const SortButton = styled(Button)`
   align-items: center;
   justify-content: center;
   margin-left: 10px;
-  background-color: #292929;
-  border-color: #6c757d;
+  background-color: #ffffff;
+  border-color: #d0d0d0;
   &:hover {
-    background-color: #373737;
-    border-color: #6c757d;
+    background-color: #e0e0e0;
+    border-color: #d0d0d0;
   }
 `;
 
@@ -80,30 +80,30 @@ const Sidebar = styled.div`
   width: 30%;
   max-height: 80vh;
   overflow-y: auto;
-  background-color: #1f1f1f;
+  background-color: #ffffff;
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const NewsItem = styled.div`
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #292929;
+  background-color: #f0f2f5;
   border-radius: 8px;
   cursor: pointer;
   &:hover {
-    background-color: #373737;
+    background-color: #e0e0e0;
   }
 `;
 
 const NewsDetails = styled.div`
   width: 70%;
-  background-color: #1f1f1f;
+  background-color: #ffffff;
   border-radius: 10px;
   padding: 20px;
   margin-left: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const NewsTitle = styled.h4`
@@ -111,7 +111,7 @@ const NewsTitle = styled.h4`
 `;
 
 const NewsTime = styled.p`
-  color: #b0b0b0;
+  color: #777;
 `;
 
 const NewsContent = styled.p`
@@ -134,7 +134,7 @@ const StockButton = styled(Button)`
 
 const StockDetails = styled.div`
   margin-top: 20px;
-  background-color: #292929;
+  background-color: #f0f2f5;
   padding: 20px;
   border-radius: 10px;
 `;
@@ -142,27 +142,27 @@ const StockDetails = styled.div`
 const customStyles = {
   control: (provided) => ({
     ...provided,
-    backgroundColor: '#292929',
-    color: 'white',
-    borderColor: '#6c757d',
+    backgroundColor: '#ffffff',
+    color: '#333',
+    borderColor: '#d0d0d0',
     borderRadius: '10px',
   }),
   menu: (provided) => ({
     ...provided,
-    backgroundColor: '#292929',
-    color: 'white',
+    backgroundColor: '#ffffff',
+    color: '#333',
   }),
   singleValue: (provided) => ({
     ...provided,
-    color: 'white',
+    color: '#333',
   }),
   input: (provided) => ({
     ...provided,
-    color: 'white',
+    color: '#333',
   }),
   placeholder: (provided) => ({
     ...provided,
-    color: '#6c757d',
+    color: '#777',
   }),
 };
 
@@ -191,9 +191,18 @@ const App = () => {
   ];
 
   const fundStocks = {
-    'Fund A': ['AAPL', 'GOOGL'],
-    'Fund B': ['MSFT', 'AMZN'],
-    'Fund C': ['TSLA', 'NVDA'],
+    'Fund A': [
+      { name: 'AAPL', weight: 0.05 },
+      { name: 'GOOGL', weight: -0.02 },
+    ],
+    'Fund B': [
+      { name: 'MSFT', weight: 0.07 },
+      { name: 'AMZN', weight: -0.01 },
+    ],
+    'Fund C': [
+      { name: 'TSLA', weight: 0.03 },
+      { name: 'NVDA', weight: -0.04 },
+    ],
   };
 
   const newsList = [
@@ -205,7 +214,6 @@ const App = () => {
         {
           name: 'AAPL',
           sentiment: 8,
-          weight: 0.05,
           prices: {
             historical: [
               { date: '2024-06-25T09:30:00', price: 185.21 },
@@ -224,7 +232,6 @@ const App = () => {
         {
           name: 'GOOGL',
           sentiment: 6,
-          weight: -0.02,
           prices: {
             historical: [
               { date: '2024-06-19T09:30:00', price: 123.45 },
@@ -256,7 +263,6 @@ const App = () => {
         {
           name: 'MSFT',
           sentiment: 9,
-          weight: 0.07,
           prices: {
             historical: [
               { date: '2024-06-25T10:45:00', price: 335.67 },
@@ -275,7 +281,6 @@ const App = () => {
         {
           name: 'AMZN',
           sentiment: 5,
-          weight: -0.01,
           prices: {
             historical: [
               { date: '2024-06-25T10:45:00', price: 130.56 },
@@ -307,19 +312,25 @@ const App = () => {
   };
 
   const filterByFund = (news) => {
-    if (!selectedFund) return true;
+    if (!selectedFund) return false; // No fund selected, show no news
     const stocksInFund = fundStocks[selectedFund.value] || [];
-    return news.stocks.some(stock => stocksInFund.includes(stock.name));
+    return news.stocks.some(stock => stocksInFund.map(fundStock => fundStock.name).includes(stock.name));
   };
 
-  const filteredNewsList = newsList
+  const getStockWeight = (stockName) => {
+    if (!selectedFund) return 0;
+    const stock = fundStocks[selectedFund.value].find(s => s.name === stockName);
+    return stock ? stock.weight : 0;
+  };
+
+  const filteredNewsList = selectedFund ? newsList
     .filter(filterByFund)
     .filter(filterByDateRange)
     .sort((a, b) => {
       const dateA = new Date(a.time);
       const dateB = new Date(b.time);
       return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
-    });
+    }) : [];
 
   return (
     <>
@@ -342,13 +353,13 @@ const App = () => {
         <Content>
           <Sidebar>
             <ControlsContainer>
-              <Label><FaCalendarAlt style={{ color: '#64ffda' }} /> From:</Label>
+              <Label><FaCalendarAlt style={{ color: '#007bff' }} /> From:</Label>
               <DateInput 
                 type="date"
                 value={filterFromDate}
                 onChange={(e) => setFilterFromDate(e.target.value)}
               />
-              <Label><FaCalendarAlt style={{ color: '#64ffda' }} /> To:</Label>
+              <Label><FaCalendarAlt style={{ color: '#007bff' }} /> To:</Label>
               <DateInput 
                 type="date"
                 value={filterToDate}
@@ -373,15 +384,15 @@ const App = () => {
                 <NewsStocks>
                   <strong>Affected Stocks:</strong>
                   {selectedNews.stocks
-                    .sort((a, b) => Math.abs(b.weight) - Math.abs(a.weight))
+                    .sort((a, b) => Math.abs(getStockWeight(b.name)) - Math.abs(getStockWeight(a.name)))
                     .map((stock, index) => (
                       <StockButton
                         key={index}
                         variant="secondary"
-                        weight={stock.weight}
+                        weight={getStockWeight(stock.name)}
                         onClick={() => setSelectedStock(stock)}
                       >
-                        {stock.name} ({stock.weight > 0 ? '+' : ''}{stock.weight})
+                        {stock.name} ({getStockWeight(stock.name) > 0 ? '+' : ''}{getStockWeight(stock.name)})
                       </StockButton>
                     ))}
                 </NewsStocks>
@@ -389,7 +400,7 @@ const App = () => {
                 <StockDetails>
                   <p><strong>Stock Name:</strong> {selectedStock.name}</p>
                   <p><strong>Sentiment Score:</strong> {selectedStock.sentiment}</p>
-                  <p><strong>Portfolio Active Weight:</strong> {selectedStock.weight}</p>
+                  <p><strong>Portfolio Active Weight:</strong> {getStockWeight(selectedStock.name)}</p>
                   <D3Chart 
                     data={selectedStock.prices.historical}
                     predictions={selectedStock.prices.predictions}
@@ -409,5 +420,3 @@ const App = () => {
 };
 
 export default App;
-
-

@@ -3,10 +3,10 @@ import * as d3 from 'd3';
 import styled from 'styled-components';
 
 const ChartContainer = styled.div`
-  background-color: #233554;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
 `;
 
@@ -24,7 +24,7 @@ const D3Chart = ({ data, predictions, newsTime }) => {
     const svg = d3.select(ref.current)
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
-      .style('background', '#233554')
+      .style('background', '#ffffff')
       .style('margin-top', '10px')
       .style('overflow', 'visible')
       .append('g')
@@ -44,11 +44,11 @@ const D3Chart = ({ data, predictions, newsTime }) => {
     svg.append('g')
       .attr('transform', `translate(0,${height})`)
       .call(d3.axisBottom(x))
-      .attr('color', '#8892b0');
+      .attr('color', '#333');
 
     svg.append('g')
       .call(d3.axisLeft(y))
-      .attr('color', '#8892b0');
+      .attr('color', '#333');
 
     const line = d3.line()
       .x(d => x(new Date(d.date)))
@@ -57,7 +57,7 @@ const D3Chart = ({ data, predictions, newsTime }) => {
     svg.append('path')
       .datum(data)
       .attr('fill', 'none')
-      .attr('stroke', '#64ffda')
+      .attr('stroke', '#007bff')
       .attr('stroke-width', 1.5)
       .attr('d', line);
 
@@ -70,7 +70,7 @@ const D3Chart = ({ data, predictions, newsTime }) => {
       .attr('cx', d => x(new Date(d.date)))
       .attr('cy', d => y(d.price))
       .attr('r', 5)
-      .attr('fill', '#ff6b6b');
+      .attr('fill', '#ff0000');
 
     // Add news time arrow
     const newsDate = new Date(newsTime);
@@ -82,17 +82,17 @@ const D3Chart = ({ data, predictions, newsTime }) => {
       .attr('cx', arrowX)
       .attr('cy', arrowY)
       .attr('r', 5)
-      .attr('fill', '#feca57');
+      .attr('fill', '#ffcc00');
 
     svg.append('path')
       .attr('d', `M${arrowX},${arrowY-15} L${arrowX-5},${arrowY-5} L${arrowX+5},${arrowY-5} Z`)
-      .attr('fill', '#feca57');
+      .attr('fill', '#ffcc00');
 
     svg.append('text')
       .attr('x', arrowX)
       .attr('y', arrowY - 20)
       .attr('text-anchor', 'middle')
-      .attr('fill', '#feca57')
+      .attr('fill', '#ffcc00')
       .attr('font-size', '12px')
       .text('News');
 
@@ -110,14 +110,14 @@ const D3Chart = ({ data, predictions, newsTime }) => {
       .attr('x', width - 19)
       .attr('width', 19)
       .attr('height', 19)
-      .attr('fill', (d, i) => i === 0 ? '#64ffda' : i === 1 ? '#ff6b6b' : '#feca57');
+      .attr('fill', (d, i) => i === 0 ? '#007bff' : i === 1 ? '#ff0000' : '#ffcc00');
 
     legend.append('text')
       .attr('x', width - 24)
       .attr('y', 9.5)
       .attr('dy', '0.32em')
       .text(d => d)
-      .attr('fill', '#8892b0');
+      .attr('fill', '#333');
 
   }, [data, predictions, newsTime]);
 
