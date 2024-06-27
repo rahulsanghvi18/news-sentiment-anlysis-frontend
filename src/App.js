@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Select from 'react-select';
 import { FaSort, FaCalendarAlt } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
+import PieChart from './PieChart';
 import D3Chart from './D3Chart';
 
 const GlobalStyle = createGlobalStyle`
@@ -128,8 +129,8 @@ const StockButton = styled(Button)`
   align-items: center;
   margin-right: 10px;
   margin-bottom: 10px;
-  background-color: ${props => props.weight > 0 ? '#4CAF50' : props.weight < 0 ? '#F44336' : '#9E9E9E'};
-  border-color: ${props => props.weight > 0 ? '#4CAF50' : props.weight < 0 ? '#F44336' : '#9E9E9E'};
+  background-color: ${props => props.activeWeight > 0 ? '#4CAF50' : props.activeWeight < 0 ? '#F44336' : '#9E9E9E'};
+  border-color: ${props => props.activeWeight > 0 ? '#4CAF50' : props.activeWeight < 0 ? '#F44336' : '#9E9E9E'};
 `;
 
 const StockDetails = styled.div`
@@ -176,6 +177,13 @@ const DropdownContainer = styled.div`
   width: 50%; /* Set the width to half the page */
 `;
 
+const PieChartContainer = styled.div`
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px 0;
+  height: 25vh; /* Set the height to 25% of the viewport height */
+`;
+
 const App = () => {
   const [selectedFund, setSelectedFund] = useState(null);
   const [selectedNews, setSelectedNews] = useState(null);
@@ -192,16 +200,16 @@ const App = () => {
 
   const fundStocks = {
     'Fund A': [
-      { name: 'AAPL', weight: 0.05 },
-      { name: 'GOOGL', weight: -0.02 },
+      { name: 'AAPL', weight: 0.15, activeWeight: 0.05, portfolioImpact: 0.02 },
+      { name: 'GOOGL', weight: 0.25, activeWeight: -0.02, portfolioImpact: 0.03 },
     ],
     'Fund B': [
-      { name: 'MSFT', weight: 0.07 },
-      { name: 'AMZN', weight: -0.01 },
+      { name: 'MSFT', weight: 0.30, activeWeight: 0.07, portfolioImpact: 0.04 },
+      { name: 'AMZN', weight: 0.10, activeWeight: -0.01, portfolioImpact: 0.05 },
     ],
     'Fund C': [
-      { name: 'TSLA', weight: 0.03 },
-      { name: 'NVDA', weight: -0.04 },
+      { name: 'TSLA', weight: 0.20, activeWeight: 0.03, portfolioImpact: 0.06 },
+      { name: 'NVDA', weight: 0.05, activeWeight: -0.04, portfolioImpact: 0.01 },
     ],
   };
 
@@ -317,10 +325,22 @@ const App = () => {
     return news.stocks.some(stock => stocksInFund.map(fundStock => fundStock.name).includes(stock.name));
   };
 
-  const getStockWeight = (stockName) => {
+  const getWeight = (stockName) => {
     if (!selectedFund) return 0;
     const stock = fundStocks[selectedFund.value].find(s => s.name === stockName);
     return stock ? stock.weight : 0;
+  };
+
+  const getActiveWeight = (stockName) => {
+    if (!selectedFund) return 0;
+    const stock = fundStocks[selectedFund.value].find(s => s.name === stockName);
+    return stock ? stock.activeWeight : 0;
+  };
+
+  const getPortfolioImpact = (stockName) => {
+    if (!selectedFund) return 0;
+    const stock = fundStocks[selectedFund.value].find(s => s.name === stockName);
+    return stock ? stock.portfolioImpact : 0;
   };
 
   const filteredNewsList = selectedFund ? newsList
@@ -331,6 +351,31 @@ const App = () => {
       const dateB = new Date(b.time);
       return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
     }) : [];
+
+  const pieChartData = useMemo(() => {
+    return selectedFund ? {
+      labels: fundStocks[selectedFund.value].map(stock => stock.name),
+      datasets: [{
+        data: fundStocks[selectedFund.value].map(stock => stock.weight),
+        backgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#4BC0C0',
+          '#9966FF',
+          '#FF9F40'
+        ],
+        hoverBackgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#4BC0C0',
+          '#9966FF',
+          '#FF9F40'
+        ]
+      }]
+    } : {};
+  }, [selectedFund]);
 
   return (
     <>
@@ -345,11 +390,19 @@ const App = () => {
               styles={customStyles}
               placeholder="Select a fund"
               options={funds}
-              onChange={setSelectedFund}
+              onChange={(selectedOption) => {
+                setSelectedFund(selectedOption);
+                setSelectedNews(null); // Clear selected news
+              }}
               isSearchable
             />
           </DropdownContainer>
         </CenteredSelectContainer>
+        {selectedFund && (
+          <PieChartContainer>
+            <PieChart data={pieChartData} style={{maxHeight: '100vh', maxWidth: '100vw'}} />
+          </PieChartContainer>
+        )}
         <Content>
           <Sidebar>
             <ControlsContainer>
@@ -384,15 +437,15 @@ const App = () => {
                 <NewsStocks>
                   <strong>Affected Stocks:</strong>
                   {selectedNews.stocks
-                    .sort((a, b) => Math.abs(getStockWeight(b.name)) - Math.abs(getStockWeight(a.name)))
+                    .sort((a, b) => Math.abs(getActiveWeight(b.name)) - Math.abs(getActiveWeight(a.name)))
                     .map((stock, index) => (
                       <StockButton
                         key={index}
                         variant="secondary"
-                        weight={getStockWeight(stock.name)}
+                        activeWeight={getActiveWeight(stock.name)}
                         onClick={() => setSelectedStock(stock)}
                       >
-                        {stock.name} ({getStockWeight(stock.name) > 0 ? '+' : ''}{getStockWeight(stock.name)})
+                        {stock.name} ({getWeight(stock.name)} Weight, {getActiveWeight(stock.name) > 0 ? '+' : ''}{getActiveWeight(stock.name)} Active Weight)
                       </StockButton>
                     ))}
                 </NewsStocks>
@@ -400,7 +453,9 @@ const App = () => {
                 <StockDetails>
                   <p><strong>Stock Name:</strong> {selectedStock.name}</p>
                   <p><strong>Sentiment Score:</strong> {selectedStock.sentiment}</p>
-                  <p><strong>Portfolio Active Weight:</strong> {getStockWeight(selectedStock.name)}</p>
+                  <p><strong>Portfolio Weight:</strong> {getWeight(selectedStock.name)}</p>
+                  <p><strong>Portfolio Active Weight:</strong> {getActiveWeight(selectedStock.name)}</p>
+                  <p><strong>Portfolio Impact:</strong> {getPortfolioImpact(selectedStock.name)}</p>
                   <D3Chart 
                     data={selectedStock.prices.historical}
                     predictions={selectedStock.prices.predictions}
