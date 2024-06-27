@@ -1,0 +1,47 @@
+body {
+  background-color: #212529;
+  color: white;
+}
+
+.header {
+  background-color: #343a40;
+  padding: 10px 20px;
+  border-bottom: 1px solid #495057;
+}
+
+.news-list {
+  max-height: 600px;
+  overflow-y: scroll;
+}
+
+.news-details {
+  background-color: #343a40;
+  padding: 20px;
+  border-left: 1px solid #495057;
+}
+
+.list-group-item {
+  background-color: #495057;
+  border: 1px solid #6c757d;
+  color: white;
+}
+
+.list-group-item:hover {
+  background-color: #6c757d;
+}
+
+.list-group-item.active {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.select__control {
+  background-color: #343a40;
+  color: white;
+  border-color: #6c757d;
+}
+
+.select__menu {
+  background-color: #343a40;
+  color: white;
+}
